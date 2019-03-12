@@ -1,5 +1,4 @@
-<%@ page import="java.util.List" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -16,18 +15,22 @@
         <div class="w3-container w3-light-blue">
             <h2>Posts</h2>
         </div>      <!-- content -->
+        <c:set var="listOfPosts" value='${requestScope["postNames"]}' />
         <ul>
-            <%
-                List<String> names = (List<String>) request.getAttribute("postNames");
-
-                if (names != null && !names.isEmpty()) {
-                    out.println("<ui>");
-                    for (String s : names) {
-                        out.println("<li>" + s + "</li>");
-                    }
-                    out.println("</ui>");
-                } else out.println("<p>There are no posts yet!</p>");
-            %>
+            <c:choose>
+                <c:when test="${listOfPosts != null}">
+                    <ui>
+                        <c:forEach items="${requestScope.postNames}" var="posts">
+                            <li>
+                                ${posts}
+                            </li>
+                        </c:forEach>
+                    </ui>
+                </c:when>
+                <c:otherwise>
+                    <p>There are no posts yet!</p>
+                </c:otherwise>
+            </c:choose>
         </ul>
     </div>
 </div>

@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -10,15 +11,14 @@
 </div>
 
 <div class="w3-container w3-padding">
-        <%
-                if (request.getAttribute("userName") != null) {
-                    out.println("<div class=\"w3-panel w3-green w3-display-container w3-card-4 w3-round\">\n" +
-                            "   <span onclick=\"this.parentElement.style.display='none'\"\n" +
-                            "   class=\"w3-button w3-margin-right w3-display-right w3-round-large w3-hover-green w3-border w3-border-green w3-hover-border-grey\">×</span>\n" +
-                            "   <h5>Post '" + request.getAttribute("postName") + "' added!</h5>\n" +
-                            "</div>");
-                }
-        %>
+    <c:set var="postName" value='${requestScope["postName"]}' />
+        <c:if test="${postName != null}">
+            <div class="w3-panel w3-green w3-display-container w3-card-4 w3-round">
+            <span onclick="this.parentElement.style.display='none'"
+                  class="w3-button w3-margin-right w3-display-right w3-round-large w3-hover-green w3-border w3-border-green w3-hover-border-grey">×</span>
+            <h5>Post ${postName} added!</h5>
+            </div>
+        </c:if>
 <div class="w3-card-4">
     <div class="w3-container w3-center w3-green">
         <h2>Add post!</h2>
