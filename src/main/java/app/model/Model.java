@@ -25,7 +25,7 @@ public class Model {
 
     public List<String> list() {
         return model.stream()
-                .map(Post::getPostName)
+                .map(Post::getTitle)
                 .collect(Collectors.toList());
     }
 }

@@ -16,22 +16,25 @@
             <h2>Posts</h2>
         </div>      <!-- content -->
         <c:set var="listOfPosts" value='${requestScope["postNames"]}' />
-        <ul>
+        <table class="w3-table w3-border">
             <c:choose>
                 <c:when test="${listOfPosts != null}">
-                    <ui>
+                    <tr>
                         <c:forEach items="${requestScope.postNames}" var="posts">
-                            <li>
-                                ${posts}
-                            </li>
+                            <td>
+                                ${posts.author}
+                            </td>
+                            <td>
+                                ${posts.title}
+                            </td>
                         </c:forEach>
-                    </ui>
+                    </tr>
                 </c:when>
                 <c:otherwise>
                     <p>There are no posts yet!</p>
                 </c:otherwise>
             </c:choose>
-        </ul>
+        </table>
     </div>
 </div>
 

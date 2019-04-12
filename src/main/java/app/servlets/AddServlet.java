@@ -1,8 +1,8 @@
 package app.servlets;
 
+import app.connection.DBConnectionManager;
 import app.entities.Post;
 import app.model.Model;
-import javafx.geometry.Pos;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,12 +10,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.util.Date;
 
 public class AddServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("views/addPost.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("WEB-INF/views/addPost.jsp");
         requestDispatcher.forward(req, resp);
     }
 
@@ -25,10 +29,25 @@ public class AddServlet extends HttpServlet {
         String text = req.getParameter("text");
         String author = req.getParameter("author");
         Post post = new Post(author, name, text);
-        Model model = Model.getInstance();
-        model.add(post);
 
-        req.setAttribute("postName", name);
+        Connection connection = DBConnectionManager.getDBConnection();
+        try {
+            Statement statement = connection.createStatement();
+
+            statement.execute("INSERT INTO posts"
+                    + "(Author, Title, PostText, Create_date) "
+                    + "VALUES " + "('" +  author + "','" + name + "','" + text + "'," + "NOW()" + ")");
+
+            req.setAttribute("postName", name);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         doGet(req, resp);
+    }
+
+    private String getCurrentTimeStamp() {
+        return DateFormat.getDateInstance().format(DateFormat.LONG);
     }
 }

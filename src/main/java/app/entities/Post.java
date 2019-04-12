@@ -6,23 +6,23 @@ public class Post {
 
     private int id;
     private String author;
-    private String postName;
+    private String title;
     private String postText;
     private String postDate;
 
     public Post(){
     }
 
-    public Post(String Author, String PostName, String postText){
-        this.author = Author;
-        this.postName = PostName;
+    public Post(String author, String title, String postText){
+        this.author = author;
+        this.title = title;
         this.postText = postText;
     }
 
-    public Post(int id, String Author, String PostName, String postText){
+    public Post(int id, String author, String title, String postText){
         this.id = id;
-        this.author = Author;
-        this.postName = PostName;
+        this.author = author;
+        this.title = title;
         this.postText = postText;
     }
 
@@ -42,12 +42,12 @@ public class Post {
         this.author = author;
     }
 
-    public String getPostName() {
-        return postName;
+    public String getTitle() {
+        return title;
     }
 
-    public void setPostName(String postName) {
-        this.postName = postName;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getPostText() {
@@ -71,14 +71,14 @@ public class Post {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Post post = (Post) o;
-        return Objects.equals(postName, post.postName) &&
+        return Objects.equals(title, post.title) &&
                 Objects.equals(postText, post.postText);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(postName, postText);
+        return Objects.hash(title, postText);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class Post {
         return "Post{" +
                 "id=" + id +
                 ", author='" + author + '\'' +
-                ", postName='" + postName + '\'' +
+                ", postName='" + title + '\'' +
                 ", postText='" + postText + '\'' +
                 ", postDate='" + postDate + '\'' +
                 '}';
